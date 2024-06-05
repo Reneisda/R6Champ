@@ -1,3 +1,4 @@
+import pathlib
 import random
 
 import discord
@@ -8,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 client_secret = os.getenv('CLIENT_SECRET')
-server_id = os.getenv('SERVER_ID')
+server_id = int(os.getenv('SERVER_ID'))
 
 print(client_secret)
 intents = discord.Intents.all()
@@ -53,12 +54,12 @@ async def random_command(interaction, number: int):
         await interaction.response.send_message(f"There are only {len(map_pool)} Maps in the Pool")
         return
 
-    if number == len(map_pool):
-        await interaction.response.send_message(f"Bro wants to select all the Maps💀")
+    if number <= 0:
+        await interaction.response.send_message(f"Your Brain must be smoother than Quantum stabilized atom mirror")
         return
 
-    if number == 0:
-        await interaction.response.send_message(f"Your Brain must be smoother than Quantum stabilized atom mirror")
+    if number == len(map_pool):
+        await interaction.response.send_message(f"Bro wants to select all the Maps💀")
         return
 
     selected_pool = set()
@@ -88,8 +89,8 @@ async def map_ban(interaction, map_nmbr: int):
         await interaction.response.send_message(f"There are only {len(map_pool)} Maps in the Pool...")
         return
 
-    if map_nmbr == 0:
-        await interaction.response.send_message("0 is invalid...")
+    if map_nmbr <= 0:
+        await interaction.response.send_message("0 and smaller is invalid...")
         return
 
     map_pool.pop(map_nmbr - 1)
