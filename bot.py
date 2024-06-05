@@ -4,13 +4,12 @@ import random
 import discord
 from discord import app_commands
 import os
+from dotenv import load_dotenv
 
-# .env file is buggy with python-dotenv
-with open("secret.env", "r") as source:
-    secrets = source.read().split("\n")
+load_dotenv()
 
-client_secret = secrets[0]
-server_id = secrets[1]
+client_secret = os.getenv('CLIENT_SECRET')
+server_id = int(os.getenv('SERVER_ID'))
 
 print(client_secret)
 intents = discord.Intents.all()
